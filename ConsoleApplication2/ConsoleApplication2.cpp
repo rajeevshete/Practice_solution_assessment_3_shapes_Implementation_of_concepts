@@ -1,46 +1,45 @@
 // ConsoleApplication2.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include<iostream>
-#include<algorithm>
-#include<vector>
-#include<stack>
-#include"shape.h"
-#include"circle.h"
-#include"rectangle.h"
-#include"triangle.h"
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include "shape.h"
+#include "circle.h"
+#include "rectangle.h"
+#include "triangle.h"
 
 using namespace std;
 
-bool compare(shape* a, shape* b)
+bool compare(shape *a, shape *b)
 {
     return (a->area() < b->area());
 }
 
-void display (vector <shape*>& vec)
+void display(vector<shape *> &vec)
 {
     if (vec.empty())
-            {
-                cout << "No shapes to display!" << endl;
-            }
-    else 
-    {        
-            for (auto& i : vec)
-            {
-                cout << "Name: " << i -> getname() << endl;
-                cout << "Area: " << i -> area() << endl;
-                cout << "Perimeter: " << i -> perimeter() << endl;
-                cout << "-----------------------------------" << endl;
-            }
+    {
+        cout << "No shapes to display!" << endl;
+    }
+    else
+    {
+        for (auto &i : vec)
+        {
+            cout << "Name: " << i->getname() << endl;
+            cout << "Area: " << i->area() << endl;
+            cout << "Perimeter: " << i->perimeter() << endl;
+            cout << "-----------------------------------" << endl;
+        }
     }
 }
 
 int main()
 {
     int choice = 0;
-    vector <shape*> vshape;
-    stack <shape*> sshape;
-
+    vector<shape *> vshape;
+    stack<shape *> sshape;
 
     while (choice != 7)
     {
@@ -56,7 +55,7 @@ int main()
         cin >> choice;
         switch (choice)
         {
-        case 1: 
+        case 1:
         {
             int choice2;
             cout << "Choose Shape Type :" << endl;
@@ -65,48 +64,48 @@ int main()
             cout << "3. Triangle" << endl;
             cout << "Choice :";
             cin >> choice2;
-            
-                if (choice2 == 1)
-                {
-                    double r;
-                    cout << "Enter radius: ";
-                    cin >> r;
-                    circle* c1 = new circle(r);
-                    // sshape.push(c1);
-                    vshape.push_back(c1);
-                    cout << "Circle created successfully!" << endl;
-                }
-                else if (choice2 == 2)
-                {
-                    double l, w;
-                    cout << "Enter length: " << endl;
-                    cin >> l;
-                    cout << "Enter width: " << endl;
-                    cin >> w;
-                    rectangle* r1 = new rectangle(l, w);
-                    // sshape.push(r1);
-                    vshape.push_back(r1);
-                    cout << "Rectangle created successfully!" << endl;
-                }
-                else if(choice2 == 3)
-                {
-                    double a, b, c;
-                    cout << "Enter side 1: " << endl;
-                    cin >> a;
-                    cout << "Enter side 2: " << endl;
-                    cin >> b;
-                    cout << "Enter side 3: " << endl;
-                    cin >> c;
-                    triangle* t1 = new triangle(a, b, c);
-                    // sshape.push(t1);
-                    vshape.push_back(t1);
-                    cout << "Triangle created successfully!" << endl;
-                }
-                else
-                {
-                    cout << "Invalid choice!" << endl;
-                }
-                break;
+
+            if (choice2 == 1)
+            {
+                double r;
+                cout << "Enter radius: ";
+                cin >> r;
+                circle *c1 = new circle(r);
+                // sshape.push(c1);
+                vshape.push_back(c1);
+                cout << "Circle created successfully!" << endl;
+            }
+            else if (choice2 == 2)
+            {
+                double l, w;
+                cout << "Enter length: " << endl;
+                cin >> l;
+                cout << "Enter width: " << endl;
+                cin >> w;
+                rectangle *r1 = new rectangle(l, w);
+                // sshape.push(r1);
+                vshape.push_back(r1);
+                cout << "Rectangle created successfully!" << endl;
+            }
+            else if (choice2 == 3)
+            {
+                double a, b, c;
+                cout << "Enter side 1: " << endl;
+                cin >> a;
+                cout << "Enter side 2: " << endl;
+                cin >> b;
+                cout << "Enter side 3: " << endl;
+                cin >> c;
+                triangle *t1 = new triangle(a, b, c);
+                // sshape.push(t1);
+                vshape.push_back(t1);
+                cout << "Triangle created successfully!" << endl;
+            }
+            else
+            {
+                cout << "Invalid choice!" << endl;
+            }
+            break;
         }
         case 2:
         {
@@ -115,7 +114,7 @@ int main()
             // {
             //     cout << "No shapes to display!" << endl;
             // }
-            
+
             // for (auto& i : vshape)
             // {
             //     cout << "Name: " << i -> getname() << endl;
@@ -126,9 +125,9 @@ int main()
             display(vshape);
             break;
         }
-        case 3: 
+        case 3:
         {
-            vector <shape*> vsorted = vshape;
+            vector<shape *> vsorted = vshape;
             sort(vsorted.begin(), vsorted.end(), compare);
             cout << "Sorted list of shapes according to area: " << endl;
             display(vsorted);
@@ -136,15 +135,34 @@ int main()
         }
         case 4:
         {
+            if (vshape.empty())
+            {
+                cout << "No shapes to search!" << endl;
+                break;
+            }
             double key_perimeter;
             cout << "Enter perimeter to search shape: ";
             cin >> key_perimeter;
-            bool found = binary_search(vshape.begin()->perimeter(), vshape.end()->perimeter(), key_perimeter);
-            if(found)
+            bool found = false;
+
+            for (auto &i : vshape)
+            {
+                if (-1e-6 < i->perimeter() - key_perimeter && i->perimeter() - key_perimeter < 1e-6)
+                {
+                    cout << "Shape found!" << endl;
+                    cout << "Name: " << i->getname() << endl;
+                    cout << "Area: " << i->area() << endl;
+                    cout << "Perimeter: " << i->perimeter() << endl;
+                    found = true;
+                    cout << "------------------------------" << endl;
+                }
+            }
+
+            if (found)
             {
                 cout << "Shape has been found" << endl;
             }
-            else 
+            else
             {
                 cout << "Shape not found!" << endl;
             }
@@ -152,16 +170,46 @@ int main()
         }
         case 5:
         {
+            int no;
+            cout << "Enter the serial number of the shape to delete: ";
+            cin >> no;
+            if (vshape.empty())
+            {
+                cout << "No shapes to delete!" << endl;
+                break;
+            }
+            if (no > vshape.size() || no < 1)
+            {
+                cout << "Invalid serial number!" << endl;
+                break;
+            }
+            sshape.push(vshape[no - 1]);
+            for (int i = no - 1; i < vshape.size() - 1; i++)
+            {
+                vshape[i] = vshape[i + 1];
+            }
+            vshape.pop_back();
+            cout << "Shape deleted successfully!" << endl;
+            display(vshape);
             break;
         }
         case 6:
         {
+            if (sshape.empty())
+            {
+                cout << "No deleted shapes to undo!" << endl;
+                break;
+            }
+            vshape.push_back(sshape.top());
+            sshape.pop();
+            cout << "Undo last delete successful" << endl;
+            display(vshape);
             break;
         }
         default:
         {
             cout << "Invalid choice!" << endl;
-            cout << "Please enter an integer between 1 to 7: "<< endl;
+            cout << "Please enter an integer between 1 to 7: " << endl;
             break;
         }
         }
@@ -171,13 +219,22 @@ int main()
         cout << endl;
         cout << "Exited sucessfully!";
     }
+    while(!sshape.empty())
+    {
+        vshape.push_back(sshape.top());
+        sshape.pop();
+    }
+    for(auto s : vshape)
+    {
+        delete s;
+    }
     return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages
