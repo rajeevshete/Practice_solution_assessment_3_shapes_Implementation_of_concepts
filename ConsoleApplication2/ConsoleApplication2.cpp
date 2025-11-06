@@ -17,6 +17,24 @@ bool compare(shape* a, shape* b)
     return (a->area() < b->area());
 }
 
+void display (vector <shape*>& vec)
+{
+    if (vec.empty())
+            {
+                cout << "No shapes to display!" << endl;
+            }
+    else 
+    {        
+            for (auto& i : vec)
+            {
+                cout << "Name: " << i -> getname() << endl;
+                cout << "Area: " << i -> area() << endl;
+                cout << "Perimeter: " << i -> perimeter() << endl;
+                cout << "-----------------------------------" << endl;
+            }
+    }
+}
+
 int main()
 {
     int choice = 0;
@@ -54,7 +72,7 @@ int main()
                     cout << "Enter radius: ";
                     cin >> r;
                     circle* c1 = new circle(r);
-                    sshape.push(c1);
+                    // sshape.push(c1);
                     vshape.push_back(c1);
                     cout << "Circle created successfully!" << endl;
                 }
@@ -66,7 +84,7 @@ int main()
                     cout << "Enter width: " << endl;
                     cin >> w;
                     rectangle* r1 = new rectangle(l, w);
-                    sshape.push(r1);
+                    // sshape.push(r1);
                     vshape.push_back(r1);
                     cout << "Rectangle created successfully!" << endl;
                 }
@@ -80,7 +98,7 @@ int main()
                     cout << "Enter side 3: " << endl;
                     cin >> c;
                     triangle* t1 = new triangle(a, b, c);
-                    sshape.push(t1);
+                    // sshape.push(t1);
                     vshape.push_back(t1);
                     cout << "Triangle created successfully!" << endl;
                 }
@@ -92,33 +110,44 @@ int main()
         }
         case 2:
         {
-            stack <shape*> display = sshape;
-            if (display.empty())
-            {
-                cout << "No shapes to display!" << endl;
-            }
-            while (!display.empty())
-            {
-                shape* s = display.top();
-                cout << "Name: ";
-                cout << s->getname() << endl;
-                cout << "Area: ";
-                cout << s->area() << endl;
-                cout << "Perimeter: ";
-                cout << s->perimeter() << endl;
-                display.pop();
-            }
+            // stack <shape*> display = sshape;
+            // if (vshape.empty())
+            // {
+            //     cout << "No shapes to display!" << endl;
+            // }
+            
+            // for (auto& i : vshape)
+            // {
+            //     cout << "Name: " << i -> getname() << endl;
+            //     cout << "Area: " << i -> area() << endl;
+            //     cout << "Perimeter: " << i -> perimeter() << endl;
+            //     cout << "-----------------------------------" << endl;
+            // }
+            display(vshape);
             break;
         }
         case 3: 
         {
-            sort(vshape.begin(), vshape.end(), compare);
+            vector <shape*> vsorted = vshape;
+            sort(vsorted.begin(), vsorted.end(), compare);
             cout << "Sorted list of shapes according to area: " << endl;
-
+            display(vsorted);
             break;
         }
         case 4:
         {
+            double key_perimeter;
+            cout << "Enter perimeter to search shape: ";
+            cin >> key_perimeter;
+            bool found = binary_search(vshape.begin()->perimeter(), vshape.end()->perimeter(), key_perimeter);
+            if(found)
+            {
+                cout << "Shape has been found" << endl;
+            }
+            else 
+            {
+                cout << "Shape not found!" << endl;
+            }
             break;
         }
         case 5:
@@ -132,8 +161,7 @@ int main()
         default:
         {
             cout << "Invalid choice!" << endl;
-            cout << "Please enter an integer between 1 to 7: ";
-            cin >> choice;
+            cout << "Please enter an integer between 1 to 7: "<< endl;
             break;
         }
         }
