@@ -14,10 +14,10 @@ using namespace std;
 
 bool compare(shape *a, shape *b)
 {
-    return (a->area() < b->area());
+    return (*a < *b);       // overloaded operator <
 }
 
-void display(vector<shape *> &vec)
+void display(vector<shape *> &vec)      // Function to display all details of shapes
 {
     if (vec.empty())
     {

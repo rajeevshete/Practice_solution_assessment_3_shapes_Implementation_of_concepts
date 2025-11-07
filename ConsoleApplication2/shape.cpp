@@ -13,3 +13,8 @@ string shape::getname() const
 {
 	return name;
 }
+
+bool shape::operator < (const shape& next) const
+{
+	return this->area() < next.area();
+}
