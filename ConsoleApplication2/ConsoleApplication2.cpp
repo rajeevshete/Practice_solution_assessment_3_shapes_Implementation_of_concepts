@@ -217,7 +217,7 @@ int main()
     if (choice == 7)
     {
         cout << endl;
-        cout << "Exited sucessfully!";
+        cout << "Exited successfully!";
     }
     while(!sshape.empty())
     {
