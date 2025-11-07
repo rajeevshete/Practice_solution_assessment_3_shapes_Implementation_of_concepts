@@ -12,12 +12,12 @@
 
 using namespace std;
 
-bool compare(shape *a, shape *b)
+inline bool compare(const shape *a, const shape *b)
 {
     return (*a < *b);       // overloaded operator <
 }
 
-void display(vector<shape *> &vec)      // Function to display all details of shapes
+inline void display(const vector<shape *> &vec)      // Function to display all details of shapes
 {
     if (vec.empty())
     {
@@ -25,7 +25,7 @@ void display(vector<shape *> &vec)      // Function to display all details of sh
     }
     else
     {
-        for (auto &i : vec)
+        for (const auto &i : vec)
         {
             cout << "Name: " << i->getname() << endl;
             cout << "Area: " << i->area() << endl;
@@ -205,6 +205,10 @@ int main()
             cout << "Undo last delete successful" << endl;
             display(vshape);
             break;
+        case 7:
+        {
+            break;
+        }
         }
         default:
         {
@@ -217,7 +221,7 @@ int main()
     if (choice == 7)
     {
         cout << endl;
-        cout << "Exited successfully!";
+        cout << "Exited successfully!" << endl;
     }
     while(!sshape.empty())
     {
@@ -228,6 +232,12 @@ int main()
     {
         delete s;
     }
+    cout << "--- Automatic and dynamic Object Lifetime Demo ---" << endl;       //Object Lifetime Demonstration
+    {
+        circle tempCircle(5); // automatic object
+        cout << "Temporary circle area: " << tempCircle.area() << endl;
+    }
+    cout << "All shapes have been deleted successfully!" << endl;   
     return 0;
 }
 
